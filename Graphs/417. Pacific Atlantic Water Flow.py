@@ -4,8 +4,7 @@ class Solution:
             ocean[row][col] = True
             lst = [[row + 1, col], [row - 1, col], [row, col + 1], [row, col - 1]]
             for r, c in lst:
-                if 0 <= r < len(heights) and 0 <= c < len(heights[0]) and not ocean[r][c] and heights[r][c] >= \
-                        heights[row][col]:
+                if 0 <= r < len(heights) and 0 <= c < len(heights[0]) and not ocean[r][c] and heights[r][c] >= heights[row][col]:
                     check(r, c, ocean)
 
         result = []
