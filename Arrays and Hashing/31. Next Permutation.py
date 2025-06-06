@@ -30,6 +30,6 @@ class Solution:
 
         next_num = dec + 1
 
-        while next_num < len(nums) and nums[next_num] <= nums[dec]:
+        while next_num < len(nums) and nums[dec] >= nums[next_num]:
             next_num += 1
         swap(next_num, dec)
