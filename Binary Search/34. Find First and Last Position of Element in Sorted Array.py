@@ -1,24 +1,29 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if not nums:
+            return [-1, -1]
 
-        def helper (leftBias):
-            left, right = 0, len(nums) - 1
-            i = -1
-
-            while left <= right:
-                mid = (left + right) // 2
-                if target > nums[mid]:
-                    left = mid + 1
-                elif target < nums[mid]:
-                    right = mid - 1
+        def firstSearch(l, r):
+            while l < r:
+                mid = (l + r) // 2
+                if nums[mid] < target:
+                    l = mid + 1
                 else:
-                    i = mid
-                    if leftBias:
-                        right = mid - 1
-                    else:
-                        left = mid + 1
-            return i
+                    r = mid
+            return l if nums[l] == target else -1
 
-        left = helper(True)
-        right = helper(False)
-        return [left, right]
+        def lastSearch(l, r):
+            while l < r:
+                mid = (l + r + 1) // 2
+                if nums[mid] > target:
+                    r = mid - 1
+                else:
+                    l = mid
+            return l if nums[l] == target else -1
+
+        first = firstSearch(0, len(nums) - 1)
+        last = lastSearch(0, len(nums) - 1)
+
+        return [first, last]
+
+
