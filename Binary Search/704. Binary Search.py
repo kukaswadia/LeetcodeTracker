@@ -11,6 +11,7 @@ class Solution:
                 low = mid + 1
         return -1
 
+# -------------------------------OR ------------------------------- (Spot the Differences with positioning of high)
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
