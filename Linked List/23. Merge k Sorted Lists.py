@@ -1,32 +1,22 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def mergeTwoLists(self, l1, l2):
-        dummy = ListNode(0)
-        current = dummy
-
-        while l1 and l2:
-            if l1.val < l2.val:
-                current.next = l1
-                l1 = l1.next
-            else:
-                current.next = l2
-                l2 = l2.next
-            current = current.next
-
-        if l1:
-            current.next = l1
-        else:
-            current.next = l2
-        return dummy.next
-
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        if not lists:
-            return None
+        min_heap = []
+        for i, node in enumerate(lists):
+            if node:
+                heapq.heappush(min_heap, (node.val, i, node))
+        dummy = ListNode(None)
+        curr = dummy
+        while min_heap:
+            val, i, node = heapq.heappop(min_heap)
+            curr.next = node
+            curr = curr.next
 
-        total = len(lists)
-        interval = 1
+            if node.next:
+                heapq.heappush(min_heap, (node.next.val, i, node.next))
 
-        while interval < total:
-            for i in range(0, total - interval, interval * 2):
-                lists[i] = self.mergeTwoLists(lists[i], lists[i + interval])
-            interval *= 2
-        return lists[0]
+        return dummy.next
