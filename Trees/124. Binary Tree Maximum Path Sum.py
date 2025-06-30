@@ -1,18 +1,22 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        max_sum = -inf
+        self.maxPathSum = float("-inf")
 
-        def dfs(node):
-            nonlocal max_sum
-            if not node:
+        def pathSum(root):
+            if not root:
                 return 0
 
-            left_gain = max(dfs(node.left), 0)
-            right_gain = max(dfs(node.right), 0)
+            left = max(0, pathSum(root.left))
+            right = max(0, pathSum(root.right))
 
-            current_path_sum = node.val + left_gain + right_gain
-            max_sum = max(max_sum, current_path_sum)
-            return node.val + max(left_gain, right_gain)
+            self.maxPathSum = max(self.maxPathSum, left + right + root.val)
+            return max(left, right) + root.val
 
-        dfs(root)
-        return max_sum
+        pathSum(root)
+        return self.maxPathSum
