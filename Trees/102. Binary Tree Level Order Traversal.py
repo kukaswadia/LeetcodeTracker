@@ -1,44 +1,29 @@
-# ------------------------------- Breadth-First Search (BFS) Using a Queue -------------------------------
-
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if not root:
+        if root is None:
             return []
 
-        result = []
-        queue = deque([root])
-
-        while queue:
-            level_size = len(queue)
-            level_nodes = []
-
-            for _ in range(level_size):
-                node = queue.popleft()
-                level_nodes.append(node.val)
-
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-
-            result.append(level_nodes)
-        return result
-
-# ------------------------------- Depth-First Search (DFS) with Recursion -------------------------------
-
-class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        queue = [root]
+        next_queue = []
+        level = []
         result = []
 
-        def dfs(node, level):
-            if not node:
-                return
+        while queue != []:
+            for root in queue:
+                level.append(root.val)
+                if root.left is not None:
+                    next_queue.append(root.left)
+                if root.right is not None:
+                    next_queue.append(root.right)
 
-            if len(result) == level:
-                result.append([])
-            result[level].append(node.val)
-
-            dfs(node.left, level + 1)
-            dfs(node.right, level + 1)
-        dfs(root, 0)
+            result.append(level)
+            level = []
+            queue = next_queue
+            next_queue = []
         return result
