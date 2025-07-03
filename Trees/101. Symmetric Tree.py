@@ -18,24 +18,20 @@ class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         return self.check(root.left, root.right)
 
-                                                    # Iterative
+                                                # Iterative
 
-        class Solution:
-            def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-                stack = [(root.left, root.right)]
-                while stack:
-                    left, right = stack.pop()
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        stack = [(root.left, root.right)]
+        while stack:
+            left, right = stack.pop()
 
-                    if left is None and right is None:
-                        continue
+            if left is None and right is None:
+                continue
+            if left is None or right is None or left.val != right.val:
+                return False
 
-                    if left is None or right is None or left.val != right.val:
-                        return False
+            stack.append((left.left, right.right))
+            stack.append((left.right, right.left))
 
-                    stack.append((left.left, right.right))
-                    stack.append((left.right, right.left))
-
-                return True
-]
-
-
+        return True
