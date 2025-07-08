@@ -1,60 +1,26 @@
-# ------------------------- Brute Force In-order Traversal with a List (Recursion) -------------------------
-
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        elements = []
 
-        def helper(node):
-            if not node:
-                return
-            helper(node.left)
-            elements.append(node.val)
-            helper(node.right)
+        self.k = k
+        self.result = None
 
-        helper(root)
-        return elements[k - 1]
-
-# ------------------------- Recursive In-order Traversal with Early Termination -------------------------
-
-class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        count = 0
-        result = None
-
-        def helper(node):
-            nonlocal count, result
-            if not node or result is not None:
-                return
-            helper(node.left)
-            count += 1
-
-            if count == k:
-                result = node.val
+        def inOrder(root):
+            if root is None or self.result is not None:
                 return
 
-            helper(node.right)
-        helper(root)
-        return result
+            inOrder(root.left)
+            self.k -= 1
+            if self.k == 0:
+                self.result = root.val
+                return
 
-# ------------------------- Iterative In-order Traversal using a Stack -------------------------
+            inOrder(root.right)
 
-class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        stack = []
-        curr = root
-        count = 0
-
-        while stack or curr:
-            while curr:
-                stack.append(curr)
-                curr = curr.left
-            curr = stack.pop()
-            count +=1
-
-            if count == k:
-                return curr.val
-
-            curr = curr.right
-        return None
-
-
+        inOrder(root)
+        return self.result
