@@ -1,64 +1,43 @@
-# ------------------------------ Recursive Deletion ------------------------------
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
+
+    def helper(self, root):
+        if root.left is None:
+            return root.right
+        if root.right is None:
+            return root.left
+
+        curr = root
+        left = root.left
+        right = root.right
+
+        while left.right:
+            left = left.right
+        left.right = right
+        return curr.left
+
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         if not root:
             return None
-
-        if key < root.val:
-            root.left = self.deleteNode(root.left, key)
-        elif key > root.val:
-            root.right = self.deleteNode(root.right, key)
-        else:
-            if not root.left:
-                return root.right
-            elif not root.right:
-                return root.left
-
-            successor = root.right
-            while successor.left:
-                successor = successor.left
-
-            root.val = successor.val
-            root.right = self.deleteNode(root.right, successor.val)
-
-        return root
-
-# ------------------------------ Iterative Deletion ------------------------------
-
-class Solution:
-    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
-        parent = None
+        if root.val == key:
+            return self.helper(root)
         curr = root
+        while root:
+            if key < root.val:
+                if root.left and root.left.val == key:
+                    root.left = self.helper(root.left)
+                    break
+                root = root.left
 
-        while curr and curr.val != key:
-            parent = curr
-            if key < curr.val:
-                curr = curr.left
             else:
-                curr = curr.right
+                if root.right and root.right.val == key:
+                    root.right = self.helper(root.right)
+                    break
+                root = root.right
+        return curr
 
-        if curr is None:
-            return root
-
-        if curr.left and curr.right:
-            successor_parent = curr
-            successor = curr.right
-            while successor.left:
-                successor_parent = successor
-                successor = successor.left
-
-            curr.val = successor.val
-            parent = successor_parent
-            curr = successor
-
-        child = curr.left if curr.left else curr.right
-
-        if parent is None:
-            return child
-
-        if parent.left == curr:
-            parent.left = child
-        else:
-            parent.right = child
-
-        return root
