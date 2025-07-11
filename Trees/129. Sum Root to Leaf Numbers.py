@@ -1,23 +1,27 @@
 # ------------------------ Recursive Depth-First Search (DFS) ------------------------
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        self.total = 0
 
-        def dfs(node, current_sum):
-            if not node:
-                return 0
+        def dfs(r, curr):
+            curr = (curr * 10) + r.val
+            if r.left is None and r.right is None:
+                self.total += curr
+            if r.left:
+                dfs(r.left, curr)
+            if r.right:
+                dfs(r.right, curr)
 
-            current_sum = current_sum * 10 + node.val
+        dfs(root, 0)
+        return self.total
 
-            if not node.left and not node.right:
-                return current_sum
-
-            left_sum = dfs(node.left, current_sum)
-            right_sum = dfs(node.right, current_sum)
-
-            return left_sum + right_sum
-
-        return dfs(root, 0)
 
 # ------------------------ Iterative DFS Using a Stack ------------------------
 
