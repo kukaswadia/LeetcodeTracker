@@ -1,70 +1,24 @@
-# ------------------------- Breadth-First Search (BFS) with a Queue -------------------------
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
-        if not root:
-            return []
+        output = []
+        curr = [root]
 
-        result = []
-        queue = deque([root])
+        while curr:
+            new_level = []
+            curr_sum = 0
+            for r in curr:
+                if r.right:
+                    new_level.append(r.right)
+                if r.left:
+                    new_level.append(r.left)
 
-        while queue:
-            level_sum = 0
-            level_count = len(queue)
-
-            for _ in range(level_count):
-                node = queue.popleft()
-                level_sum += node.val
-
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-
-            average = level_sum / level_count
-            result.append(average)
-        return result
-
-# ------------------------- Depth-First Search (DFS) with Recursion -------------------------
-
-class Solution:
-    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
-        sums = []
-        counts = []
-
-        def dfs(node, level):
-            if node is None:
-                return
-
-            if level < len(sums):
-                sums[level] += node.val
-                counts[level] += 1
-            else:
-                sums.append(node.val)
-                counts.append(1)
-
-            dfs(node.left, level + 1)
-            dfs(node.right, level + 1)
-        dfs(root, 0)
-        return [sums[i] / counts[i] for i in range(len(sums))]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                curr_sum += r.val
+            output.append(curr_sum / len(curr))
+            curr = new_level
+        return output
