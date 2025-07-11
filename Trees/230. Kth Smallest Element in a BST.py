@@ -24,3 +24,21 @@ class Solution:
 
         inOrder(root)
         return self.result
+
+# --------Iterative------------
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        stack = []
+        result = None
+
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+
+            root = stack.pop()
+            k -= 1
+            if k == 0:
+                return root.val
+            root = root.right
