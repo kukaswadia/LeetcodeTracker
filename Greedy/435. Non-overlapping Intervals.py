@@ -5,8 +5,8 @@ class Solution:
 
         intervals.sort(key = lambda x : x[1])
         remove = 0
-        end = intervals[0][0]
-        for times in intervals:
+        end = intervals[0][1]
+        for times in intervals[1:]:
             start = times[0]
             if start < end:
                 remove += 1
