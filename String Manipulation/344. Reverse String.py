@@ -3,10 +3,15 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        left = 0
-        right = len(s) - 1
 
-        while left < right:
-            s[left], s[right] = s[right], s[left]
-            left += 1
-            right -= 1
+        sign = -1 if x < 0 else 1
+        x = abs(x)
+
+        reversed_x = 0
+        while x != 0:
+            digit = x % 10
+            reversed_x = reversed_x * 10 + digit
+            x //= 10
+
+        reversed_x *= sign
+        
