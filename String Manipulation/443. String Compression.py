@@ -1,17 +1,18 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        write = 0
-        read = 0
+        n = len(chars)
+        read = 0        # pointer to scan through the array
+        write = 0       # pointer to write compressed data in place
 
-        while read < len(chars):
-            char = chars[read]
+        while read < n:
+            ch = chars[read]
             count = 0
 
-            while read < len(chars) and chars[read] == char:
+            while read < n and chars[read] == ch:
                 read += 1
                 count += 1
 
-            chars[write] = char
+            chars[write] = ch
             write += 1
 
             if count > 1:
@@ -20,3 +21,4 @@ class Solution:
                     write += 1
 
         return write
+
