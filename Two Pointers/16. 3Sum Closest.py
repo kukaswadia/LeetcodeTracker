@@ -16,11 +16,12 @@ class Solution:
                     return current_sum
 
                 if abs(current_sum - target) < abs(closest_sum - target):
-                    closest_sum = current_sum
+                    closest_sum = current_sum 
 
                 if current_sum < target:
                     left += 1
-                else:
+                elif current_sum > target:
                     right -= 1
 
         return closest_sum
+        
