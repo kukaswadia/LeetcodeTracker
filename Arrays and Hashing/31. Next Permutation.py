@@ -25,6 +25,8 @@ class Solution:
         while dec >= 0 and nums[dec] >= nums[dec + 1]:
             dec -= 1
         reverse(dec + 1, len(nums) - 1)
+        
+        # Check if dec == -1 which means the entire sequence is descending order so last possible permutation
         if dec == -1:
             return
 
