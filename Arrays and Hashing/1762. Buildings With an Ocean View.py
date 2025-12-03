@@ -1,5 +1,9 @@
 class Solution:
     def findBuildings(self, heights: List[int]) -> List[int]:
+        """
+        Time Complexity: O(n)
+        Space Complexity: O(1) excluding output array
+        """
         result = []
         max_height = 0
         
