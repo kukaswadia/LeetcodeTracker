@@ -1,11 +1,9 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        d = defaultdict(int)
-
-        for char in magazine:
-            d[char] += 1
+        magazine_count = Counter(magazine)
         for char in ransomNote:
-            if char not in d or d[char] <= 0:
+            if magazine_count[char] <= 0:
                 return False
-            d[char] -= 1
+            magazine_count[char] -= 1 
         return True
+        
