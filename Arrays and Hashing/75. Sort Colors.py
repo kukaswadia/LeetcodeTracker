@@ -3,22 +3,22 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        red = 0
-        white = 0
-        blue = len(nums) - 1
+        low = 0
+        mid = 0
+        high = len(nums) - 1
 
-        while white <= blue:
-            curr = nums[white]
-            if curr == 0:
-                nums[white] = nums[red]
-                nums[red] = 0
-                red += 1
-                white += 1
-
-            if curr == 1:
-                white += 1
-
-            if curr == 2:
-                nums[white] = nums[blue]
-                nums[blue] = 2
-                blue -= 1
+        while mid <= high:
+            if nums[mid] == 0:
+                # Swap with low pointer and move forward
+                nums[low], nums[mid] = nums[mid], nums[low]
+                low += 1
+                mid += 1
+            
+            elif nums[mid] == 1:
+                # Already in correct position -> move mid
+                mid += 1
+            else:
+                # nums[mid] == 2
+                # swap with high pointer and move high back
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1
